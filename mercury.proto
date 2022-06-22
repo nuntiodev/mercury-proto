@@ -39,15 +39,16 @@ message Message {
 message Conversation {
     string id = 1;
     string admin_id = 2;
-    string image = 3;
+    optional string image = 3;
     repeated string users = 4;
     google.protobuf.Timestamp updated_at = 5;
 }
 
 message MercuryRequest {
-    User user = 1;
-    Message message = 2;
-    Conversation conversation = 3;
+    string namespace = 1;
+    User user = 2;
+    Message message = 3;
+    Conversation conversation = 4;
 }
 
 message MercuryResponse {
