@@ -24,6 +24,7 @@ type ServiceClient interface {
 	GetAllUsers(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	UpdateUser(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	DeleteUser(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
+	CreateConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	Send(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	GetRecentConversations(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	DeleteConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
@@ -92,6 +93,15 @@ func (c *serviceClient) DeleteUser(ctx context.Context, in *MercuryRequest, opts
 	return out, nil
 }
 
+func (c *serviceClient) CreateConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error) {
+	out := new(MercuryResponse)
+	err := c.cc.Invoke(ctx, "/Mercury.Service/CreateConversation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceClient) Send(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error) {
 	out := new(MercuryResponse)
 	err := c.cc.Invoke(ctx, "/Mercury.Service/Send", in, out, opts...)
@@ -138,6 +148,7 @@ type ServiceServer interface {
 	GetAllUsers(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	UpdateUser(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	DeleteUser(context.Context, *MercuryRequest) (*MercuryResponse, error)
+	CreateConversation(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	Send(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	GetRecentConversations(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	DeleteConversation(context.Context, *MercuryRequest) (*MercuryResponse, error)
@@ -165,6 +176,9 @@ func (UnimplementedServiceServer) UpdateUser(context.Context, *MercuryRequest) (
 }
 func (UnimplementedServiceServer) DeleteUser(context.Context, *MercuryRequest) (*MercuryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedServiceServer) CreateConversation(context.Context, *MercuryRequest) (*MercuryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateConversation not implemented")
 }
 func (UnimplementedServiceServer) Send(context.Context, *MercuryRequest) (*MercuryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
@@ -298,6 +312,24 @@ func _Service_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_CreateConversation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MercuryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CreateConversation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Mercury.Service/CreateConversation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CreateConversation(ctx, req.(*MercuryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Service_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MercuryRequest)
 	if err := dec(in); err != nil {
@@ -400,6 +432,10 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteUser",
 			Handler:    _Service_DeleteUser_Handler,
+		},
+		{
+			MethodName: "CreateConversation",
+			Handler:    _Service_CreateConversation_Handler,
 		},
 		{
 			MethodName: "Send",
