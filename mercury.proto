@@ -8,13 +8,59 @@ import "google/protobuf/timestamp.proto";
 
 service Service {
     rpc Ping(MercuryRequest)  returns (MercuryResponse) {}
+    rpc CreateUser(MercuryRequest) returns (MercuryResponse) {}
+    rpc GetUser(MercuryRequest) returns (MercuryResponse) {}
+    rpc GetAllUsers(MercuryRequest) returns (MercuryResponse) {}
+    rpc UpdateUser(MercuryRequest) returns (MercuryResponse) {}
+    rpc DeleteUser(MercuryRequest) returns (MercuryResponse) {}
+
+    rpc Send(MercuryRequest) returns (MercuryResponse) {}
+    rpc GetRecentConversations(MercuryRequest) returns (MercuryResponse) {}
+    rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
+
     rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
 }
 
-message MercuryRequest {
+message User {
+    string id = 1;
+    string name = 2;
+    string image = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
 
+message Message {
+    string id = 1;
+    string conversation_id = 2;
+    string user_id = 3;
+    google.protobuf.Timestamp sent_at = 4;
+}
+
+message Conversation {
+    string id = 1;
+    string admin_id = 2;
+    string image = 3;
+}
+
+message Connection {
+    string id = 1;
+    string conversation_id = 2;
+    string user_id = 3;
+    google.protobuf.Timestamp updated_at = 4;
+}
+
+message MercuryRequest {
+    User user = 1;
+    Message message = 2;
+    Conversation conversation = 3;
+    Connection connection = 4;
 }
 
 message MercuryResponse {
-    
+    User user = 1;
+    repeated User users = 2;
+    Message message = 3;
+    repeated Message messages = 4;
+    Conversation conversation = 5;
+    repeated Connection connections = 6;
 }
