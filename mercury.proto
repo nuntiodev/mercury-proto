@@ -13,7 +13,8 @@ service Service {
     rpc GetAllUsers(MercuryRequest) returns (MercuryResponse) {}
     rpc UpdateUser(MercuryRequest) returns (MercuryResponse) {}
     rpc DeleteUser(MercuryRequest) returns (MercuryResponse) {}
-
+    
+    rpc CreateConversation(MercuryRequest) returns (MercuryResponse) {}
     rpc Send(MercuryRequest) returns (MercuryResponse) {}
     rpc GetRecentConversations(MercuryRequest) returns (MercuryResponse) {}
     rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
