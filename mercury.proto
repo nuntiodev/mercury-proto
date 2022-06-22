@@ -40,13 +40,8 @@ message Conversation {
     string id = 1;
     string admin_id = 2;
     string image = 3;
-}
-
-message Connection {
-    string id = 1;
-    string conversation_id = 2;
-    string user_id = 3;
-    google.protobuf.Timestamp updated_at = 4;
+    repeated string users = 4;
+    google.protobuf.Timestamp updated_at = 5;
 }
 
 message MercuryRequest {
