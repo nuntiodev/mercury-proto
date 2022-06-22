@@ -48,7 +48,6 @@ message MercuryRequest {
     User user = 1;
     Message message = 2;
     Conversation conversation = 3;
-    Connection connection = 4;
 }
 
 message MercuryResponse {
@@ -57,5 +56,5 @@ message MercuryResponse {
     Message message = 3;
     repeated Message messages = 4;
     Conversation conversation = 5;
-    repeated Connection connections = 6;
+    repeated Conversation conversations = 6;
 }
