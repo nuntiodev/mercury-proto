@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package Mercury;
+
+option go_package = "./go_mercury";
+
+import "google/protobuf/timestamp.proto";
+
+service Service {
+    rpc Ping(MercuryRequest)  returns (MercuryResponse) {}
+    rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
+}
+
+message MercuryRequest {
+
+}
+
+message MercuryResponse {
+    
+}
