@@ -7,56 +7,59 @@ option go_package = "./go_mercury";
 import "google/protobuf/timestamp.proto";
 
 service Service {
-    rpc Ping(MercuryRequest)  returns (MercuryResponse) {}
-    rpc CreateUser(MercuryRequest) returns (MercuryResponse) {}
-    rpc GetUser(MercuryRequest) returns (MercuryResponse) {}
-    rpc GetAllUsers(MercuryRequest) returns (MercuryResponse) {}
-    rpc UpdateUser(MercuryRequest) returns (MercuryResponse) {}
-    rpc DeleteUser(MercuryRequest) returns (MercuryResponse) {}
-    
-    rpc CreateConversation(MercuryRequest) returns (MercuryResponse) {}
-    rpc Send(MercuryRequest) returns (MercuryResponse) {}
-    rpc GetRecentConversations(MercuryRequest) returns (MercuryResponse) {}
-    rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
+  rpc Ping(MercuryRequest)  returns (MercuryResponse) {}
+  rpc CreateUser(MercuryRequest) returns (MercuryResponse) {}
+  rpc GetUser(MercuryRequest) returns (MercuryResponse) {}
+  rpc GetAllUsers(MercuryRequest) returns (MercuryResponse) {}
+  rpc UpdateUser(MercuryRequest) returns (MercuryResponse) {}
+  rpc DeleteUser(MercuryRequest) returns (MercuryResponse) {}
 
-    rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
+  rpc CreateConversation(MercuryRequest) returns (MercuryResponse) {}
+  rpc AddUserToConversation(MercuryRequest) returns (MercuryResponse) {}
+  rpc RemoveUserFromConversation(MercuryRequest) returns (MercuryResponse) {}
+  rpc Send(MercuryRequest) returns (MercuryResponse) {}
+  rpc GetRecentConversations(MercuryRequest) returns (MercuryResponse) {}
+  rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
+
+  rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
 }
 
 message User {
-    string id = 1;
-    string name = 2;
-    string image = 3;
-    google.protobuf.Timestamp created_at = 4;
-    google.protobuf.Timestamp updated_at = 5;
+  string id = 1;
+  string name = 2;
+  string image = 3;
+  string email = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message Message {
-    string id = 1;
-    string conversation_id = 2;
-    string user_id = 3;
-    google.protobuf.Timestamp sent_at = 4;
+  string id = 1;
+  string conversation_id = 2;
+  string user_id = 3;
+  google.protobuf.Timestamp sent_at = 4;
 }
 
 message Conversation {
-    string id = 1;
-    string admin_id = 2;
-    optional string image = 3;
-    repeated string users = 4;
-    google.protobuf.Timestamp updated_at = 5;
+  string id = 1;
+  string admin_id = 2;
+  optional string image = 3;
+  repeated string users = 4;
+  google.protobuf.Timestamp updated_at = 5;
 }
 
 message MercuryRequest {
-    string namespace = 1;
-    User user = 2;
-    Message message = 3;
-    Conversation conversation = 4;
+  string namespace = 1;
+  User user = 2;
+  Message message = 3;
+  Conversation conversation = 4;
 }
 
 message MercuryResponse {
-    User user = 1;
-    repeated User users = 2;
-    Message message = 3;
-    repeated Message messages = 4;
-    Conversation conversation = 5;
-    repeated Conversation conversations = 6;
+  User user = 1;
+  repeated User users = 2;
+  Message message = 3;
+  repeated Message messages = 4;
+  Conversation conversation = 5;
+  repeated Conversation conversations = 6;
 }
