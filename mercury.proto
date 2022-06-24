@@ -18,7 +18,7 @@ service Service {
   rpc AddUserToConversation(MercuryRequest) returns (MercuryResponse) {}
   rpc RemoveUserFromConversation(MercuryRequest) returns (MercuryResponse) {}
   rpc Send(MercuryRequest) returns (MercuryResponse) {}
-  rpc List(MercuryRequest) returns (MercuryResponse) {}
+  rpc ListConversations(MercuryRequest) returns (MercuryResponse) {}
   rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
 
   rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
