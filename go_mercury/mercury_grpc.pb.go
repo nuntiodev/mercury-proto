@@ -28,7 +28,7 @@ type ServiceClient interface {
 	AddUserToConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	RemoveUserFromConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	Send(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
-	GetRecentConversations(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
+	List(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	DeleteConversation(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 	Heartbeat(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error)
 }
@@ -131,9 +131,9 @@ func (c *serviceClient) Send(ctx context.Context, in *MercuryRequest, opts ...gr
 	return out, nil
 }
 
-func (c *serviceClient) GetRecentConversations(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error) {
+func (c *serviceClient) List(ctx context.Context, in *MercuryRequest, opts ...grpc.CallOption) (*MercuryResponse, error) {
 	out := new(MercuryResponse)
-	err := c.cc.Invoke(ctx, "/Mercury.Service/GetRecentConversations", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Mercury.Service/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ type ServiceServer interface {
 	AddUserToConversation(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	RemoveUserFromConversation(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	Send(context.Context, *MercuryRequest) (*MercuryResponse, error)
-	GetRecentConversations(context.Context, *MercuryRequest) (*MercuryResponse, error)
+	List(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	DeleteConversation(context.Context, *MercuryRequest) (*MercuryResponse, error)
 	Heartbeat(context.Context, *MercuryRequest) (*MercuryResponse, error)
 }
@@ -211,8 +211,8 @@ func (UnimplementedServiceServer) RemoveUserFromConversation(context.Context, *M
 func (UnimplementedServiceServer) Send(context.Context, *MercuryRequest) (*MercuryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
-func (UnimplementedServiceServer) GetRecentConversations(context.Context, *MercuryRequest) (*MercuryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRecentConversations not implemented")
+func (UnimplementedServiceServer) List(context.Context, *MercuryRequest) (*MercuryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 func (UnimplementedServiceServer) DeleteConversation(context.Context, *MercuryRequest) (*MercuryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteConversation not implemented")
@@ -412,20 +412,20 @@ func _Service_Send_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_GetRecentConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MercuryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).GetRecentConversations(ctx, in)
+		return srv.(ServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Mercury.Service/GetRecentConversations",
+		FullMethod: "/Mercury.Service/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetRecentConversations(ctx, req.(*MercuryRequest))
+		return srv.(ServiceServer).List(ctx, req.(*MercuryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -514,8 +514,8 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Service_Send_Handler,
 		},
 		{
-			MethodName: "GetRecentConversations",
-			Handler:    _Service_GetRecentConversations_Handler,
+			MethodName: "List",
+			Handler:    _Service_List_Handler,
 		},
 		{
 			MethodName: "DeleteConversation",
