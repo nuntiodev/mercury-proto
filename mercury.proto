@@ -13,24 +13,24 @@ service Service {
   rpc GetAllUsers(MercuryRequest) returns (MercuryResponse) {}
   rpc UpdateUser(MercuryRequest) returns (MercuryResponse) {}
   rpc DeleteUser(MercuryRequest) returns (MercuryResponse) {}
-
   rpc CreateConversation(MercuryRequest) returns (MercuryResponse) {}
   rpc AddUserToConversation(MercuryRequest) returns (MercuryResponse) {}
   rpc RemoveUserFromConversation(MercuryRequest) returns (MercuryResponse) {}
   rpc Send(MercuryRequest) returns (MercuryResponse) {}
   rpc GetRecentConversations(MercuryRequest) returns (MercuryResponse) {}
   rpc DeleteConversation(MercuryRequest) returns (MercuryResponse) {}
-
   rpc Heartbeat(MercuryRequest) returns (MercuryResponse) {}
 }
 
 message User {
   string id = 1;
-  string name = 2;
-  string image = 3;
-  string email = 4;
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
+  string first_name = 2;
+  string last_name = 3;
+  string image = 4;
+  string email = 5;
+  string username = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 message Message {
